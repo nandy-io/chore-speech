@@ -1,0 +1,17 @@
+apiVersion: klot.io/v1
+kind: App
+metadata:
+  name: chore-speech.nandy.io
+  description: Chore Speech - Nandy I/O
+spec:
+  source:
+    site: github.com
+    repo: nandy-io/chore-speech
+  manifests:
+  - path: kubernetes/namespace.yaml
+  - path: kubernetes/daemon.yaml
+  requires:
+  - site: github.com
+    repo: nandy-io/chore
+  - site: github.com
+    repo: nandy-io/speech
