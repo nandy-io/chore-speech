@@ -22,7 +22,9 @@ class Daemon(object):
         "skip": "you do not have to %s.",
         "unskip": "you do have to %s.",
         "complete": "thank you. You did %s",
-        "incomplete": "I'm sorry but you did not %s yet."
+        "uncomplete": "I'm sorry but you did not %s yet.",
+        "expire": "your time to %s has expired.",
+        "unexpire": "your time to %s has not expired."
     }
 
     def __init__(self):
