@@ -15,7 +15,7 @@ class Daemon(object):
     """
 
     ROUTINE_STATEMENTS = {
-        "start": "time to %s.",
+        "create": "time to %s.",
         "remind": "please %s.",
         "pause": "you do not have to %s yet.",
         "unpause": "you do have to %s now.",
