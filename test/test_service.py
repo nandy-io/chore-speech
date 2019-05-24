@@ -117,7 +117,7 @@ class TestService(unittest.TestCase):
             {
                 "data": json.dumps({
                     "kind": "routine",
-                    "action": "start",
+                    "action": "create",
                     "routine": {
                         "data": {
                             "text": "hey",
@@ -132,7 +132,7 @@ class TestService(unittest.TestCase):
             {
                 "data": json.dumps({
                     "kind": "task",
-                    "action": "start",
+                    "action": "create",
                     "routine": {
                         "data": {
                             "speech": {
@@ -224,7 +224,7 @@ class TestService(unittest.TestCase):
             {
                 "data": json.dumps({
                     "kind": "routine",
-                    "action": "start",
+                    "action": "create",
                     "routine": {
                         "data": {
                             "text": "hey",
