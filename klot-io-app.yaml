@@ -6,7 +6,7 @@ metadata:
 spec:
   source:
     site: github.com
-    repo: nandy-io/chore-speech
+    repo: nandy-io/chore-speech-daemon
   manifests:
   - path: kubernetes/namespace.yaml
   - path: kubernetes/daemon.yaml
