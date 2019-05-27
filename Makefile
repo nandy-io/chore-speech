@@ -12,7 +12,7 @@ ENVIRONMENT=-e SLEEP=0.1 \
 			-e REDIS_CHANNEL=nandy.io/chore \
 			-e SPEECH_API=http://speech-api.nandyio
 
-.PHONY: cross build network shell test run push install update remove reset
+.PHONY: cross build network shell test run start stop push install update remove reset tag
 
 cross:
 	docker run --rm --privileged multiarch/qemu-user-static:register --reset
@@ -54,3 +54,7 @@ remove:
 	-kubectl delete -f kubernetes/account.yaml
 
 reset: remove install
+
+tag:
+	-git tag -a "v$(VERSION)" -m "Version $(VERSION)"
+	git push origin --tags
