@@ -12,8 +12,11 @@ ENVIRONMENT=-e SLEEP=0.1 \
 			-e REDIS_CHANNEL=nandy.io/chore \
 			-e SPEECH_API=http://speech-api.nandyio
 
-.PHONY: build network shell test run push install update remove reset
+.PHONY: cross build network shell test run push install update remove reset
 
+cross:
+	docker run --rm --privileged multiarch/qemu-user-static:register --reset
+	
 build:
 	docker build . -t $(ACCOUNT)/$(IMAGE):$(VERSION)
 
