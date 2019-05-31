@@ -58,7 +58,7 @@ class TestService(unittest.TestCase):
         self.assertEqual(daemon.redis.host, "most.com")
         self.assertEqual(daemon.redis.port, 667)
         self.assertEqual(daemon.channel, "stuff")
-        self.assertEqual(daemon.speech, "http://boast.com/speak")
+        self.assertEqual(daemon.speech_api, "http://boast.com/speak")
         self.assertEqual(daemon.sleep, 0.7)
 
     def test_subscribe(self):
@@ -67,6 +67,46 @@ class TestService(unittest.TestCase):
 
         self.assertEqual(self.daemon.redis, self.daemon.pubsub)
         self.assertEqual(self.daemon.redis.channel, "stuff")
+
+    def test_text(self):
+
+        self.assertEqual("ya", self.daemon.text(
+            {
+                "name": "hey",
+                "data": {
+                    "text": "ya"
+                }
+            }
+        ))
+
+        self.assertEqual("hey", self.daemon.text(
+            {
+                "name": "hey",
+                "data": {}
+            }
+        ))
+
+    def test_speech(self):
+
+        self.assertEqual("hey", self.daemon.speech(
+            {
+                "speech": "hey"
+            },
+            {
+                "data": {
+                    "speech": "ya"
+                }
+            }
+        ))
+
+        self.assertEqual("ya", self.daemon.speech(
+            {},
+            {
+                "data": {
+                    "speech": "ya"
+                }
+            }
+        ))
 
     @unittest.mock.patch("service.time.time", unittest.mock.MagicMock(return_value=7))
     @unittest.mock.patch("requests.post")
@@ -119,13 +159,14 @@ class TestService(unittest.TestCase):
                     "kind": "routine",
                     "action": "create",
                     "routine": {
+                        "name": "ya",
                         "data": {
-                            "text": "hey",
-                            "speech": True
+                            "text": "hey"
                         }
                     },
                     "person": {
-                        "name": "dude"
+                        "name": "dude",
+                        "data": {}
                     }
                 })
             },
@@ -145,7 +186,8 @@ class TestService(unittest.TestCase):
                         "text": "you"
                     },
                     "person": {
-                        "name": "dude"
+                        "name": "dude",
+                        "data": {}
                     }
                 })
             },
@@ -158,13 +200,15 @@ class TestService(unittest.TestCase):
                     },
                     "todos": [
                         {
+                            "name": "hey",
                             "data": {
                                 "text": "guys"
                             }
                         }
                     ],
                     "person": {
-                        "name": "dude"
+                        "name": "dude",
+                        "data": {}
                     }
                 })
             }
@@ -226,13 +270,14 @@ class TestService(unittest.TestCase):
                     "kind": "routine",
                     "action": "create",
                     "routine": {
+                        "name": "ya",
                         "data": {
-                            "text": "hey",
-                            "speech": True
+                            "text": "hey"
                         }
                     },
                     "person": {
-                        "name": "dude"
+                        "name": "dude",
+                        "data": {}
                     }
                 })
             },

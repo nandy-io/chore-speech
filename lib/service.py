@@ -34,7 +34,7 @@ class Daemon(object):
         self.redis = redis.StrictRedis(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']))
         self.channel = os.environ['REDIS_CHANNEL']
 
-        self.speech = f"{os.environ['SPEECH_API']}/speak"
+        self.speech_api = f"{os.environ['SPEECH_API']}/speak"
 
         self.pubsub = None
 
@@ -45,6 +45,14 @@ class Daemon(object):
 
         self.pubsub = self.redis.pubsub()
         self.pubsub.subscribe(self.channel) 
+
+    @staticmethod
+    def text(model):
+        return model["data"].get("text", model["name"])
+
+    @staticmethod
+    def speech(data, person):
+        return data.get("speech", person["data"].get("speech"))
 
     def speak(self, text, speech=None, name=None):
 
@@ -62,7 +70,7 @@ class Daemon(object):
         if "language" in speech:
             message["language"] = speech["language"]
 
-        requests.post(self.speech, json=message).raise_for_status()
+        requests.post(self.speech_api, json=message).raise_for_status()
 
     def process(self):
         """
@@ -76,28 +84,32 @@ class Daemon(object):
 
         data = json.loads(message['data'])
 
-        if data["kind"] == "routine" and data["routine"]["data"].get("speech"):
+        if data["kind"] == "routine":
 
             self.speak(
-                self.ROUTINE_STATEMENTS[data["action"]] % data["routine"]["data"]["text"],
-                data["routine"]["data"]["speech"],
+                self.ROUTINE_STATEMENTS[data["action"]] % self.text(data["routine"]),
+                self.speech(data["routine"]["data"], data["person"]),
                 data["person"]["name"]
             )
 
-        elif data["kind"] == "task" and data["routine"]["data"].get("speech"):
+        elif data["kind"] == "task":
 
             self.speak(
                 self.ROUTINE_STATEMENTS[data["action"]] % data["task"]["text"],
-                data["routine"]["data"]["speech"],
+                self.speech(data["routine"]["data"], data["person"]),
                 data["person"]["name"]
             )
 
-        elif data["kind"] == "todo" and data.get("speech"):
+        elif data["kind"] == "todo":
 
-            self.speak("these are your current todos:", data["speech"], data["person"]["name"])
+            self.speak(
+                "these are your current todos:",
+                self.speech(data, data["person"]),
+                data["person"]["name"]
+            )
 
             for todo in data["todos"]:
-                self.speak(todo["data"]["text"], data["speech"])
+                self.speak(self.text(todo), self.speech(data, data["person"]))
 
     def run(self):
         """
