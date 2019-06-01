@@ -15,9 +15,9 @@ class Daemon(object):
     """
 
     AREA_STATEMENTS = {
-        "create": "you are now responsibile for the %s.",
-        "wrong": "I'm sorry but the %s is not up to snuff.",
-        "right": "thank you for the %s is now up to snuff."
+        "create": "you are now responsibile for %s.",
+        "wrong": "I'm sorry but %s is not up to snuff.",
+        "right": "thank you for %s is now up to snuff."
     }
 
     ACT_STATEMENTS = {
