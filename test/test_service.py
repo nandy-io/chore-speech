@@ -161,7 +161,7 @@ class TestService(unittest.TestCase):
                     "area": {
                         "name": "ya",
                         "data": {
-                            "text": "living room"
+                            "text": "the living room"
                         }
                     },
                     "person": {
