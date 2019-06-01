@@ -156,6 +156,76 @@ class TestService(unittest.TestCase):
             {"data": 1},
             {
                 "data": json.dumps({
+                    "kind": "area",
+                    "action": "create",
+                    "area": {
+                        "name": "ya",
+                        "data": {
+                            "text": "living room"
+                        }
+                    },
+                    "person": {
+                        "name": "dude",
+                        "data": {}
+                    }
+                })
+            },
+            {
+                "data": json.dumps({
+                    "kind": "act",
+                    "action": "create",
+                    "act": {
+                        "name": "ya",
+                        "status": "positive",
+                        "data": {
+                            "text": "put away your towel"
+                        }
+                    },
+                    "person": {
+                        "name": "dude",
+                        "data": {}
+                    }
+                })
+            },
+            {
+                "data": json.dumps({
+                    "kind": "todo",
+                    "action": "create",
+                    "todo": {
+                        "name": "ya",
+                        "data": {
+                            "text": "mow the lawn"
+                        }
+                    },
+                    "person": {
+                        "name": "dude",
+                        "data": {}
+                    }
+                })
+            },
+            {
+                "data": json.dumps({
+                    "kind": "todos",
+                    "speech": {
+                        "node": "bump",
+                        "language": "cursing"
+                    },
+                    "todos": [
+                        {
+                            "name": "hey",
+                            "data": {
+                                "text": "guys"
+                            }
+                        }
+                    ],
+                    "person": {
+                        "name": "dude",
+                        "data": {}
+                    }
+                })
+            },
+            {
+                "data": json.dumps({
                     "kind": "routine",
                     "action": "create",
                     "routine": {
@@ -190,38 +260,18 @@ class TestService(unittest.TestCase):
                         "data": {}
                     }
                 })
-            },
-            {
-                "data": json.dumps({
-                    "kind": "todo",
-                    "speech": {
-                        "node": "bump",
-                        "language": "cursing"
-                    },
-                    "todos": [
-                        {
-                            "name": "hey",
-                            "data": {
-                                "text": "guys"
-                            }
-                        }
-                    ],
-                    "person": {
-                        "name": "dude",
-                        "data": {}
-                    }
-                })
             }
         ]
 
         self.daemon.process()
         self.daemon.process()
 
+        mock_post.reset_mock()
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "timestamp": 7,
-                "text": "dude, time to hey."
+                "text": "dude, you are now responsibile for the living room."
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -231,9 +281,17 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "timestamp": 7,
-                "text": "dude, time to you.",
-                "node": "bump",
-                "language": "cursing"
+                "text": "dude, thank you for you did put away your towel."
+            }),
+            unittest.mock.call().raise_for_status()
+        ])
+
+        mock_post.reset_mock()
+        self.daemon.process()
+        mock_post.assert_has_calls([
+            unittest.mock.call("http://boast.com/speak", json={
+                "timestamp": 7,
+                "text": "dude, at some point, mow the lawn."
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -251,6 +309,28 @@ class TestService(unittest.TestCase):
             unittest.mock.call("http://boast.com/speak", json={
                 "timestamp": 7,
                 "text": "guys",
+                "node": "bump",
+                "language": "cursing"
+            }),
+            unittest.mock.call().raise_for_status()
+        ])
+
+        mock_post.reset_mock()
+        self.daemon.process()
+        mock_post.assert_has_calls([
+            unittest.mock.call("http://boast.com/speak", json={
+                "timestamp": 7,
+                "text": "dude, time to hey."
+            }),
+            unittest.mock.call().raise_for_status()
+        ])
+
+        mock_post.reset_mock()
+        self.daemon.process()
+        mock_post.assert_has_calls([
+            unittest.mock.call("http://boast.com/speak", json={
+                "timestamp": 7,
+                "text": "dude, time to you.",
                 "node": "bump",
                 "language": "cursing"
             }),

@@ -14,9 +14,18 @@ class Daemon(object):
     Main class for daemon
     """
 
-    ROUTINE_STATEMENTS = {
-        "create": "time to %s.",
-        "remind": "please %s.",
+    AREA_STATEMENTS = {
+        "create": "you are now responsibile for the %s.",
+        "wrong": "I'm sorry but the %s is not up to snuff.",
+        "right": "thank you for the %s is now up to snuff."
+    }
+
+    ACT_STATEMENTS = {
+        "negative": "I'm sorry but you did not %s.",
+        "positive": "thank you for you did %s."
+    }
+
+    ACTION_STATEMENTS = {
         "pause": "you do not have to %s yet.",
         "unpause": "you do have to %s now.",
         "skip": "you do not have to %s.",
@@ -26,6 +35,19 @@ class Daemon(object):
         "expire": "your time to %s has expired.",
         "unexpire": "your time to %s has not expired."
     }
+
+    TODO_STATEMENTS = {
+        "create": "at some point, %s."
+    }
+
+    TODO_STATEMENTS.update(ACTION_STATEMENTS)
+
+    ROUTINE_STATEMENTS = {
+        "create": "time to %s.",
+        "remind": "please %s."
+    }
+
+    ROUTINE_STATEMENTS.update(ACTION_STATEMENTS)
 
     def __init__(self):
 
@@ -84,7 +106,42 @@ class Daemon(object):
 
         data = json.loads(message['data'])
 
-        if data["kind"] == "routine":
+        if data["kind"] == "area":
+
+            self.speak(
+                self.AREA_STATEMENTS[data["action"]] % self.text(data["area"]),
+                self.speech(data["area"]["data"], data["person"]),
+                data["person"]["name"]
+            )
+
+        elif data["kind"] == "act":
+
+            self.speak(
+                self.ACT_STATEMENTS[data["act"]["status"]] % self.text(data["act"]),
+                self.speech(data["act"]["data"], data["person"]),
+                data["person"]["name"]
+            )
+
+        elif data["kind"] == "todo":
+
+            self.speak(
+                self.TODO_STATEMENTS[data["action"]] % self.text(data["todo"]),
+                self.speech(data["todo"]["data"], data["person"]),
+                data["person"]["name"]
+            )
+
+        elif data["kind"] == "todos":
+
+            self.speak(
+                "these are your current todos:",
+                self.speech(data, data["person"]),
+                data["person"]["name"]
+            )
+
+            for todo in data["todos"]:
+                self.speak(self.text(todo), self.speech(data, data["person"]))
+
+        elif data["kind"] == "routine":
 
             self.speak(
                 self.ROUTINE_STATEMENTS[data["action"]] % self.text(data["routine"]),
@@ -99,17 +156,6 @@ class Daemon(object):
                 self.speech(data["routine"]["data"], data["person"]),
                 data["person"]["name"]
             )
-
-        elif data["kind"] == "todo":
-
-            self.speak(
-                "these are your current todos:",
-                self.speech(data, data["person"]),
-                data["person"]["name"]
-            )
-
-            for todo in data["todos"]:
-                self.speak(self.text(todo), self.speech(data, data["person"]))
 
     def run(self):
         """
