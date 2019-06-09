@@ -281,7 +281,7 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "timestamp": 7,
-                "text": "dude, thank you for you did put away your towel."
+                "text": "dude, it is good you put away your towel."
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -291,7 +291,7 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "timestamp": 7,
-                "text": "dude, at some point, mow the lawn."
+                "text": "dude, 'mow the lawn' has been added to your ToDo list."
             }),
             unittest.mock.call().raise_for_status()
         ])
