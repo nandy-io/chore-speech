@@ -9,6 +9,7 @@ spec:
     repo: nandy-io/chore-speech
   namespace: chore-speech-nandy-io
   manifests:
+  - path: kubernetes/namespace.yaml
   - path: daemon/kubernetes/daemon.yaml
   requires:
   - site: github.com
