@@ -16,8 +16,8 @@ class Daemon(object):
 
     AREA_STATEMENTS = {
         "create": "you are now responsibile for %s.",
-        "wrong": "I'm sorry but %s is not up to snuff.",
-        "right": "thank you for %s is now up to snuff."
+        "wrong": "%s is not up to snuff.",
+        "right": "%s is now up to snuff."
     }
 
     ACT_STATEMENTS = {
@@ -44,6 +44,7 @@ class Daemon(object):
 
     ROUTINE_STATEMENTS = {
         "create": "time to %s.",
+        "start": "time to %s.",
         "remind": "please %s.",
         "complete": "thank you. You did %s",
         "uncomplete": "I'm sorry but you did not %s yet."
@@ -80,8 +81,7 @@ class Daemon(object):
 
     def speak(self, text, speech=None, name=None):
 
-        message = {
-            "timestamp": time.time(),
+        speak = {
             "text": f"{name}, {text}" if name else text
         }
 
@@ -89,12 +89,12 @@ class Daemon(object):
             speech = {}
 
         if "node" in speech:
-            message["node"] = speech["node"]
+            speak["node"] = speech["node"]
 
         if "language" in speech:
-            message["language"] = speech["language"]
+            speak["language"] = speech["language"]
 
-        requests.post(self.speech_api, json=message).raise_for_status()
+        requests.post(self.speech_api, json={"speak": speak}).raise_for_status()
 
     def process(self):
         """

@@ -108,21 +108,22 @@ class TestService(unittest.TestCase):
             }
         ))
 
-    @unittest.mock.patch("service.time.time", unittest.mock.MagicMock(return_value=7))
     @unittest.mock.patch("requests.post")
     def test_speak(self, mock_post):
 
         self.daemon.speak("hey")
 
         mock_post.assert_called_with("http://boast.com/speak", json={
-            "timestamp": 7,
-            "text": "hey"
+            "speak": {
+                "text": "hey"
+            }
         })
 
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "hey"
+                "speak": {
+                    "text": "hey"
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -137,15 +138,15 @@ class TestService(unittest.TestCase):
 
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, hey",
-                "node": "bump",
-                "language": "cursing"
+                "speak": {
+                    "text": "dude, hey",
+                    "node": "bump",
+                    "language": "cursing"
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
 
-    @unittest.mock.patch("service.time.time", unittest.mock.MagicMock(return_value=7))
     @unittest.mock.patch("requests.post")
     def test_process(self, mock_post):
 
@@ -270,8 +271,9 @@ class TestService(unittest.TestCase):
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, you are now responsibile for the living room."
+                "speak": {
+                    "text": "dude, you are now responsibile for the living room."
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -280,8 +282,9 @@ class TestService(unittest.TestCase):
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, it is good you put away your towel."
+                "speak": {
+                    "text": "dude, it is good you put away your towel."
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -290,8 +293,9 @@ class TestService(unittest.TestCase):
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, 'mow the lawn' has been added to your ToDo list."
+                "speak": {
+                    "text": "dude, 'mow the lawn' has been added to your ToDo list."
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -300,17 +304,19 @@ class TestService(unittest.TestCase):
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, these are your current todos:",
-                "node": "bump",
-                "language": "cursing"
+                "speak": {
+                    "text": "dude, these are your current todos:",
+                    "node": "bump",
+                    "language": "cursing"
+                }
             }),
             unittest.mock.call().raise_for_status(),
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "guys",
-                "node": "bump",
-                "language": "cursing"
+                "speak": {
+                    "text": "guys",
+                    "node": "bump",
+                    "language": "cursing"
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -319,8 +325,9 @@ class TestService(unittest.TestCase):
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, time to hey."
+                "speak": {
+                    "text": "dude, time to hey."
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
@@ -329,15 +336,15 @@ class TestService(unittest.TestCase):
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, time to you.",
-                "node": "bump",
-                "language": "cursing"
+                "speak": {
+                    "text": "dude, time to you.",
+                    "node": "bump",
+                    "language": "cursing"
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
 
-    @unittest.mock.patch("service.time.time", unittest.mock.MagicMock(return_value=7))
     @unittest.mock.patch("requests.post")
     @unittest.mock.patch("service.time.sleep")
     @unittest.mock.patch("traceback.format_exc")
@@ -374,8 +381,9 @@ class TestService(unittest.TestCase):
 
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
-                "timestamp": 7,
-                "text": "dude, time to hey."
+                "speak": {
+                    "text": "dude, time to hey."
+                }
             }),
             unittest.mock.call().raise_for_status()
         ])
