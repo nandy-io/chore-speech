@@ -111,18 +111,13 @@ class TestService(unittest.TestCase):
     @unittest.mock.patch("requests.post")
     def test_speak(self, mock_post):
 
-        self.daemon.speak("hey")
-
-        mock_post.assert_called_with("http://boast.com/speak", json={
-            "speak": {
-                "text": "hey"
-            }
-        })
+        self.daemon.speak("hey", {"node": "unittest"})
 
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "speak": {
-                    "text": "hey"
+                    "text": "hey",
+                    "node": "unittest"
                 }
             }),
             unittest.mock.call().raise_for_status()
@@ -162,12 +157,32 @@ class TestService(unittest.TestCase):
                     "area": {
                         "name": "ya",
                         "data": {
-                            "text": "the living room"
+                            "text": "nope"
                         }
                     },
                     "person": {
                         "name": "dude",
                         "data": {}
+                    }
+                })
+            },
+            {
+                "data": json.dumps({
+                    "kind": "area",
+                    "action": "create",
+                    "area": {
+                        "name": "ya",
+                        "data": {
+                            "text": "the living room"
+                        }
+                    },
+                    "person": {
+                        "name": "dude",
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             },
@@ -184,7 +199,11 @@ class TestService(unittest.TestCase):
                     },
                     "person": {
                         "name": "dude",
-                        "data": {}
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             },
@@ -200,7 +219,11 @@ class TestService(unittest.TestCase):
                     },
                     "person": {
                         "name": "dude",
-                        "data": {}
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             },
@@ -221,7 +244,11 @@ class TestService(unittest.TestCase):
                     ],
                     "person": {
                         "name": "dude",
-                        "data": {}
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             },
@@ -237,7 +264,11 @@ class TestService(unittest.TestCase):
                     },
                     "person": {
                         "name": "dude",
-                        "data": {}
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             },
@@ -258,7 +289,11 @@ class TestService(unittest.TestCase):
                     },
                     "person": {
                         "name": "dude",
-                        "data": {}
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             }
@@ -266,13 +301,15 @@ class TestService(unittest.TestCase):
 
         self.daemon.process()
         self.daemon.process()
+        self.daemon.process()
 
         mock_post.reset_mock()
         self.daemon.process()
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "speak": {
-                    "text": "dude, you are now responsibile for the living room."
+                    "text": "dude, you are now responsibile for the living room.",
+                    "node": "unittest"
                 }
             }),
             unittest.mock.call().raise_for_status()
@@ -283,7 +320,8 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "speak": {
-                    "text": "dude, it is good you put away your towel."
+                    "text": "dude, it is good you put away your towel.",
+                    "node": "unittest"
                 }
             }),
             unittest.mock.call().raise_for_status()
@@ -294,7 +332,8 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "speak": {
-                    "text": "dude, 'mow the lawn' has been added to your ToDo list."
+                    "text": "dude, 'mow the lawn' has been added to your ToDo list.",
+                    "node": "unittest"
                 }
             }),
             unittest.mock.call().raise_for_status()
@@ -326,7 +365,8 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "speak": {
-                    "text": "dude, time to hey."
+                    "text": "dude, time to hey.",
+                    "node": "unittest"
                 }
             }),
             unittest.mock.call().raise_for_status()
@@ -364,7 +404,11 @@ class TestService(unittest.TestCase):
                     },
                     "person": {
                         "name": "dude",
-                        "data": {}
+                        "data": {
+                            "speech": {
+                                "node": "unittest"
+                            }
+                        }
                     }
                 })
             },
@@ -382,7 +426,8 @@ class TestService(unittest.TestCase):
         mock_post.assert_has_calls([
             unittest.mock.call("http://boast.com/speak", json={
                 "speak": {
-                    "text": "dude, time to hey."
+                    "text": "dude, time to hey.",
+                    "node": "unittest"
                 }
             }),
             unittest.mock.call().raise_for_status()

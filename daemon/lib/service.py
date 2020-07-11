@@ -69,7 +69,7 @@ class Daemon(object):
         """
 
         self.pubsub = self.redis.pubsub()
-        self.pubsub.subscribe(self.channel) 
+        self.pubsub.subscribe(self.channel)
 
     @staticmethod
     def text(model):
@@ -79,14 +79,14 @@ class Daemon(object):
     def speech(data, person):
         return data.get("speech", person["data"].get("speech"))
 
-    def speak(self, text, speech=None, name=None):
+    def speak(self, text, speech, name=None):
 
         speak = {
             "text": f"{name}, {text}" if name else text
         }
 
         if not isinstance(speech, dict):
-            speech = {}
+            return
 
         if "node" in speech:
             speak["node"] = speech["node"]
