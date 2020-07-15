@@ -77,7 +77,7 @@ class Daemon(object):
 
     @staticmethod
     def speech(data, person):
-        return data.get("speech", person["data"].get("speech"))
+        return data.get("chore-speech.nandy.io", person["data"].get("chore-speech.nandy.io"))
 
     def speak(self, text, speech, name=None):
 

@@ -90,11 +90,11 @@ class TestService(unittest.TestCase):
 
         self.assertEqual("hey", self.daemon.speech(
             {
-                "speech": "hey"
+                "chore-speech.nandy.io": "hey"
             },
             {
                 "data": {
-                    "speech": "ya"
+                    "chore-speech.nandy.io": "ya"
                 }
             }
         ))
@@ -103,7 +103,7 @@ class TestService(unittest.TestCase):
             {},
             {
                 "data": {
-                    "speech": "ya"
+                    "chore-speech.nandy.io": "ya"
                 }
             }
         ))
@@ -179,7 +179,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
@@ -200,7 +200,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
@@ -220,7 +220,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
@@ -230,7 +230,7 @@ class TestService(unittest.TestCase):
             {
                 "data": json.dumps({
                     "kind": "todos",
-                    "speech": {
+                    "chore-speech.nandy.io": {
                         "node": "bump",
                         "language": "cursing"
                     },
@@ -245,7 +245,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
@@ -265,7 +265,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
@@ -278,7 +278,7 @@ class TestService(unittest.TestCase):
                     "action": "create",
                     "routine": {
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "bump",
                                 "language": "cursing"
                             }
@@ -290,7 +290,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
@@ -405,7 +405,7 @@ class TestService(unittest.TestCase):
                     "person": {
                         "name": "dude",
                         "data": {
-                            "speech": {
+                            "chore-speech.nandy.io": {
                                 "node": "unittest"
                             }
                         }
