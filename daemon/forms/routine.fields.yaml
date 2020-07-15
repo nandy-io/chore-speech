@@ -1,0 +1,3 @@
+description: Speech settings
+integrate:
+  url: http://api.speech-nandy-io/integrate

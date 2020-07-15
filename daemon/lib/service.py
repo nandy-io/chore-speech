@@ -76,8 +76,8 @@ class Daemon(object):
         return model["data"].get("text", model["name"])
 
     @staticmethod
-    def speech(data, person):
-        return data.get("speech", person["data"].get("speech"))
+    def speech(model, person):
+        return model.get("chore-speech.nandy.io", person.get("chore-speech.nandy.io"))
 
     def speak(self, text, speech, name=None):
 
@@ -112,7 +112,7 @@ class Daemon(object):
 
             self.speak(
                 self.AREA_STATEMENTS[data["action"]] % self.text(data["area"]),
-                self.speech(data["area"]["data"], data["person"]),
+                self.speech(data["area"], data["person"]),
                 data["person"]["name"]
             )
 
@@ -120,7 +120,7 @@ class Daemon(object):
 
             self.speak(
                 self.ACT_STATEMENTS[data["act"]["status"]] % self.text(data["act"]),
-                self.speech(data["act"]["data"], data["person"]),
+                self.speech(data["act"], data["person"]),
                 data["person"]["name"]
             )
 
@@ -128,7 +128,7 @@ class Daemon(object):
 
             self.speak(
                 self.TODO_STATEMENTS[data["action"]] % self.text(data["todo"]),
-                self.speech(data["todo"]["data"], data["person"]),
+                self.speech(data["todo"], data["person"]),
                 data["person"]["name"]
             )
 
@@ -147,7 +147,7 @@ class Daemon(object):
 
             self.speak(
                 self.ROUTINE_STATEMENTS[data["action"]] % self.text(data["routine"]),
-                self.speech(data["routine"]["data"], data["person"]),
+                self.speech(data["routine"], data["person"]),
                 data["person"]["name"]
             )
 
@@ -155,7 +155,7 @@ class Daemon(object):
 
             self.speak(
                 self.ROUTINE_STATEMENTS[data["action"]] % data["task"]["text"],
-                self.speech(data["routine"]["data"], data["person"]),
+                self.speech(data["routine"], data["person"]),
                 data["person"]["name"]
             )
 

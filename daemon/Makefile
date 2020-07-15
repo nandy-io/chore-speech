@@ -1,6 +1,6 @@
 ACCOUNT=nandyio
 IMAGE=chore-speech-daemon
-VERSION?=0.2
+VERSION?=0.3
 NAME=$(IMAGE)-$(ACCOUNT)
 NETWORK=klot.io
 VOLUMES=-v ${PWD}/lib/:/opt/service/lib/ \
