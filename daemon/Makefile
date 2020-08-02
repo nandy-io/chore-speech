@@ -1,7 +1,7 @@
 ACCOUNT=nandyio
 IMAGE=chore-speech-daemon
 VERSION?=0.3
-DEBUG_PORT=26534
+DEBUG_PORT=26751
 VOLUMES=-v ${PWD}/lib/:/opt/service/lib/ \
 		-v ${PWD}/bin/:/opt/service/bin/ \
 		-v ${PWD}/test/:/opt/service/test/
