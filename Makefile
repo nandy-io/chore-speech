@@ -1,14 +1,28 @@
 VERSION?=0.4
-NAMESPACE=chore-speech-nandy-io
-.PHONY: install remove reset tag untag
+TILT_PORT=26783
+.PHONY: up down integrate disintegrate tag untag
 
-install:
-	-kubectl create ns $(NAMESPACE)
+integrate:
+	cp daemon/forms/person.fields.yaml ../people/config/integration_chore-speech.nandy.io_person.fields.yaml
+	cp daemon/forms/area.fields.yaml ../chore/config/integration_chore-speech.nandy.io_area.fields.yaml
+	cp daemon/forms/act.fields.yaml ../chore/config/integration_chore-speech.nandy.io_act.fields.yaml
+	cp daemon/forms/todo.fields.yaml ../chore/config/integration_chore-speech.nandy.io_todo.fields.yaml
+	cp daemon/forms/routine.fields.yaml ../chore/config/integration_chore-speech.nandy.io_routine.fields.yaml
 
-remove:
-	-kubectl delete ns $(NAMESPACE)
+disintegrate:
+	rm ../people/config/integration_chore-speech.nandy.io_person.fields.yaml
+	rm ../chore/config/integration_chore-speech.nandy.io_area.fields.yaml
+	rm ../chore/config/integration_chore-speech.nandy.io_act.fields.yaml
+	rm ../chore/config/integration_chore-speech.nandy.io_todo.fields.yaml
+	rm ../chore/config/integration_chore-speech.nandy.io_routine.fields.yaml
 
-reset: remove install
+up: integrate
+	kubectx docker-desktop
+	tilt --port $(TILT_PORT) up
+
+down: disintegrate
+	kubectx docker-desktop
+	tilt down
 
 tag:
 	-git tag -a "v$(VERSION)" -m "Version $(VERSION)"
