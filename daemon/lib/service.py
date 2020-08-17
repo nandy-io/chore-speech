@@ -10,7 +10,7 @@ import requests
 
 import klotio
 
-class Daemon(object):
+class Daemon:
     """
     Main class for daemon
     """
@@ -87,13 +87,23 @@ class Daemon(object):
 
     @staticmethod
     def text(model):
+        """
+        Gets text from data or name
+        """
         return model["data"].get("text", model["name"])
 
     @staticmethod
     def speech(model, person):
+        """
+        Gets integration from the model or person
+        """
+
         return model.get("chore-speech.nandy.io", person.get("chore-speech.nandy.io"))
 
     def speak(self, text, speech, name=None):
+        """
+        Hits the Speech API with the text to say
+        """
 
         speak = {
             "text": f"{name}, {text}" if name else text
